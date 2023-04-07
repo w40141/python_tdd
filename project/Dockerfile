@@ -14,10 +14,16 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-# install python dependencies
-RUN pip install --no-cache-dir --upgrade pip
-COPY ./requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# install PDM
+RUN pip install -U pip setuptools wheel
+RUN pip install pdm
+
+# copy files
+COPY pyproject.toml pdm.lock ./
+
+# Not to create virtualenv (PEP582)
+RUN mkdir __pypackages__ && pdm install --prod --no-lock --no-editable
+
 
 # add app
 COPY . .
