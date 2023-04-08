@@ -1,5 +1,5 @@
-FROM mysql:8.0-debian
+# pull official base image
+FROM postgres:15
 
-RUN apt update \
-    && apt install --no-install-recommends -y tzdata \
-    && apt clean
+# run create.sql on init
+COPY db/create.sql /docker-entrypoint-initdb.d

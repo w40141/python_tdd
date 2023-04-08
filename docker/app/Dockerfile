@@ -19,3 +19,10 @@ COPY pyproject.toml pdm.lock ./
 # Not to create virtualenv (PEP582)
 RUN mkdir __pypackages__ \
   && pdm install --prod --no-lock --no-editable
+
+# add entrypoint.sh
+COPY ./scripts/entrypoint.sh ./scripts
+RUN chmod +x /project/scripts/entrypoint.sh
+
+# run entrypoint.sh
+ENTRYPOINT ["/project/scripts/entrypoint.sh"]

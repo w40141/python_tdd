@@ -4,9 +4,9 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
-    # depends_on:
-    #   - web-tdd-db
-    command: bash -c "/project/scripts/endpoint.sh"
+    command: pdm run uvicorn app.main:app --reload --port=8000 --host=0.0.0.0
+    depends_on:
+      - web-tdd-db
     environment:
       - ENVIRONMENT=dev
       - TESTING=0
@@ -16,15 +16,12 @@ services:
       - 8004:8000
     volumes:
       - ./app:/project/app
-      - ./scripts:/project/scripts
-    # working_dir: /project/scripts
-
-  # web-tdd-db:
-  #   build:
-  #     context: ./project/db
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #   expose:
-  #     - 5432
+  web-tdd-db:
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    expose:
+      - 5432
