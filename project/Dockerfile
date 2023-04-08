@@ -15,8 +15,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # install PDM
-RUN pip install -U pip setuptools wheel
-RUN pip install pdm
+RUN pip install --no-cache-dir -U pip setuptools wheel && pip install --no-cache-dir pdm
 
 # copy files
 COPY pyproject.toml pdm.lock ./
@@ -24,13 +23,12 @@ COPY pyproject.toml pdm.lock ./
 # Not to create virtualenv (PEP582)
 RUN mkdir __pypackages__ && pdm install --prod --no-lock --no-editable
 
-
 # add app
 COPY . .
 
 # add entrypoint.sh
-COPY ./entrypoint.sh .
-RUN chmod +x /usr/src/app/entrypoint.sh
+# COPY ./entrypoint.sh .
+# RUN chmod +x /usr/src/app/entrypoint.sh
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+# ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
