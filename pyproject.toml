@@ -1,0 +1,71 @@
+[project]
+name = "python_tdd"
+version = "0.0.1"
+description = ""
+authors = [
+    {name = "Daisuke Oku", email = "w.40141@gmail.com"},
+]
+dependencies = [
+    "anyio==3.6.2",
+    "click==8.1.3",
+    "fastapi==0.95.0",
+    "h11==0.14.0",
+    "idna==3.4",
+    "pydantic==1.10.7",
+    "sniffio==1.3.0",
+    "starlette==0.26.1",
+    "typing-extensions==4.5.0",
+    "uvicorn==0.21.1",
+]
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=23.3.0",
+    "ruff>=0.0.261",
+    "pyright>=1.1.302",
+    "pytest>=7.2.2",
+]
+
+[tool.pdm.scripts]
+black = "black ./app"
+black_test = "black ./tests"
+pyright = "pyright ./app"
+pyright_test = "pyright ./tests"
+ruff_lint = "ruff ./app"
+ruff_lint_test = "ruff ./tests"
+ruff_fix = "ruff --fix-only ./app"
+ruff_fix_test = "ruff --fix-only ./tests"
+test = "pytest tests"
+format = { composite = [
+    "ruff_fix", "ruff_fix_test", "black", "black_test"
+] }
+lint = { composite = [
+    "ruff_lint", "ruff_lint_test", "pyright", "pyright_test"
+] }
+check = { composite = ["format", "lint", "test"] }
+
+[tool.black]
+target-version = ["py311"]
+
+[tool.ruff]
+select = [
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "Q",   # flake8-quotes
+    "UP",  # pyupgrade
+    "W",   # pycodestyle
+]
+target-version = "py311"
+src = ["app"]
+
+[tool.pyright]
+pythonVersion = "3.11"
+extraPaths = ["__pypackages__/3.11/lib/"]

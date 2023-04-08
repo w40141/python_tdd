@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  web-tdd:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    # depends_on:
+    #   - web-tdd-db
+    command: bash -c "/project/scripts/endpoint.sh"
+    environment:
+      - ENVIRONMENT=dev
+      - TESTING=0
+      - DATABASE_URL=postgres://postgres:postgres@web-db:5432/web_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@web-db:5432/web_test
+    ports:
+      - 8004:8000
+    volumes:
+      - ./app:/project/app
+      - ./scripts:/project/scripts
+    # working_dir: /project/scripts
+
+  # web-tdd-db:
+  #   build:
+  #     context: ./project/db
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #   expose:
+  #     - 5432
