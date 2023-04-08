@@ -8,6 +8,9 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# copy files
+COPY pyproject.toml pdm.lock app entrypoint.sh ./
+
 # install system dependencies
 RUN apt-get update \
   && apt-get -y install --no-install-recommends netcat gcc \
@@ -17,14 +20,7 @@ RUN apt-get update \
 # install PDM
 RUN pip install --no-cache-dir -U pip setuptools wheel && pip install --no-cache-dir pdm
 
-# copy files
-COPY pyproject.toml pdm.lock ./
-
-# Not to create virtualenv (PEP582)
 RUN mkdir __pypackages__ && pdm install --prod --no-lock --no-editable
-
-# add app
-COPY app entrypoint.sh ./
 
 # add entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.sh
