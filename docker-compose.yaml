@@ -10,8 +10,8 @@ services:
     environment:
       - ENVIRONMENT=dev
       - TESTING=0
-      - DATABASE_URL=postgres://postgres:postgres@web-db:5432/web_dev
-      - DATABASE_TEST_URL=postgres://postgres:postgres@web-db:5432/web_test
+      - DATABASE_URL=postgres://postgres:postgres@web-tdd-db:5432/web_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@web-tdd-db:5432/web_test
     ports:
       - 8004:8000
     volumes:

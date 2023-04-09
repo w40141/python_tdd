@@ -16,13 +16,21 @@ dependencies = [
     "starlette==0.26.1",
     "typing-extensions==4.5.0",
     "uvicorn==0.21.1",
+    "tortoise-orm>=0.19.3",
+    "asyncpg>=0.27.0",
+    "aerich>=0.7.1",
 ]
 requires-python = ">=3.11"
 license = {text = "MIT"}
 
 [build-system]
 requires = ["pdm-pep517>=1.0"]
+
 build-backend = "pdm.pep517.api"
+[tool.aerich]
+tortoise_orm = "app.db.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."
 
 [tool.pdm.dev-dependencies]
 dev = [
