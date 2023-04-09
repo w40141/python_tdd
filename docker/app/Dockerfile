@@ -16,9 +16,10 @@ RUN pip install --no-cache-dir -U pip setuptools wheel \
 COPY pyproject.toml pdm.lock ./
 
 RUN mkdir __pypackages__ \
-  && pdm install --prod --no-lock --no-editable
+  && pdm install --no-lock --no-editable
 
 COPY ./scripts /project/scripts
+COPY ./tests /project/tests
 RUN chmod +x /project/scripts/entrypoint.sh
 
 ENTRYPOINT ["/project/scripts/entrypoint.sh"]

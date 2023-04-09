@@ -158,3 +158,4 @@ cython_debug/
 pytest-coverage.txt
 pytest.xml
 .ruff_cache
+.pdm.toml
