@@ -78,3 +78,4 @@ src = ["app"]
 
 [tool.pyright]
 pythonVersion = "3.11"
+extraPaths = ["__pypackages__/3.11/lib/"]
